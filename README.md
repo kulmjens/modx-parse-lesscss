@@ -1,12 +1,22 @@
-modx-parse-lesscss
-==================
+# modx-parse-lesscss
 
-Parses a LessCSS-Files in MODX
+Parses a LessCSS-File with MODX Evo 1.x<br>
+See http://leafo.net/lessphp/ for futher info
 
-To install create a new plugin in MODX and copy the content of parselesscss.plugin.txt into the plugin.
-Check the OnWebPageComplete-Event in the "Events" tab.
-Copy the following line in the "configuration" tab:
+## Requirements
 
-&fileIn=LESS File;text; &fileOut=CSS File;text; &minify=Minify?;list;yes,no;yes
+- MODX Evolution 1.x
+- A copy of lessphp.inc.php v0.3.9 in `/assets/libs/`
 
-Requires MODX Evolution 1.x and a copy of lessphp.inc.php v0.3.9 in the folder "libs" under "assets" a.k.a. "/assets/libs/lessphp.inc.php"
+## Installation
+
+- Create a new plugin named "ParseLessCSS"
+- Copy the content of parselesscss.plugin.txt into the content of the plugin
+- Check the **OnWebPageComplete** event in the "events" tab.
+- Copy the following in the "configuration" tab: `&fileIn=LESS File;text; &fileOut=CSS File;text; &minify=Minify?;list;yes,no;yes`
+
+## Configuration
+- LESS File: should be the LESS file with the relative path and slash infront, e.g. `/assets/templates/website/styles.less`
+- CSS File: should be the CSS file that LessCSS generates. e.g. `/asstes/templates/website/styles.css`
+- Minify?: Choose **yes** if you want the plugin to minify the generated CSS file
+
