@@ -1,0 +1,47 @@
+//<?php
+/*
+ *	Name:		ParseLessCss
+ *	Desciption:	<strong>1.0</strong> Parses a less file and writes a minified css file
+ *	Category:	Manager & Admin
+ *	Events:		OnWebPageComplete
+ *	Config:		&fileIn=LESS File;text; &fileOut=CSS File;text; &minify=Minify?;list;yes,no;yes
+ *
+ *  Requires a copy of lessphp.inc.php v0.3.9
+ */
+
+require MODX_BASE_PATH.'assets/libs/lessc.inc.php';
+
+function autoCompileLess($inputFile, $outputFile,$minify) {
+	// load the cache
+	$cacheFile = $inputFile.".cache";
+
+	if (file_exists($cacheFile)) {
+		$cache = unserialize(file_get_contents($cacheFile));
+	} else {
+		$cache = $inputFile;
+	}
+
+	$less = new lessc;
+	$newCache = $less->cachedCompile($cache);
+
+	if(!is_array($cache) || $newCache["updated"] > $cache["updated"]) {
+		file_put_contents($cacheFile, serialize($newCache));
+		$new_cache_min = $newCache['compiled'];
+		if($minify == 'yes') {
+			$new_cache_min = preg_replace('#\s+#',        ' ', $new_cache_min);
+			$new_cache_min = preg_replace('#/\*.*?\*/#s', '' , $new_cache_min);
+			$new_cache_min =  str_replace('; ',           ';', $new_cache_min);
+			$new_cache_min =  str_replace(': ',           ':', $new_cache_min);
+			$new_cache_min =  str_replace(' {',           '{', $new_cache_min);
+			$new_cache_min =  str_replace('{ ',           '{', $new_cache_min);
+			$new_cache_min =  str_replace(', ',           ',', $new_cache_min);
+			$new_cache_min =  str_replace('} ',           '}', $new_cache_min);
+			$new_cache_min =  str_replace(';}',           '}', $new_cache_min);
+			$new_cache_min = trim($new_cache_min);
+		}
+		file_put_contents($outputFile, $new_cache_min);
+	}
+}
+
+autoCompileLess(MODX_BASE_PATH.$fileIn, MODX_BASE_PATH.$fileOut,$minify);
+//?>
