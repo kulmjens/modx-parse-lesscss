@@ -16,7 +16,7 @@ See http://leafo.net/lessphp/ for futher info
 - Copy the following in the "configuration" tab: `&fileIn=LESS File;text; &fileOut=CSS File;text; &minify=Minify?;list;yes,no;yes`
 
 ## Configuration
-- LESS File: should be the LESS file with the relative path and slash infront, e.g. `/assets/templates/website/styles.less`
-- CSS File: should be the CSS file that LessCSS generates. e.g. `/asstes/templates/website/styles.css`
+- LESS File: should be the relative path to the LESS-file, e.g. `assets/templates/website/styles.less`
+- CSS File: should be the relative path to the generated CSS-file, e.g. `asstes/templates/website/styles.css`
 - Minify?: Choose **yes** if you want the plugin to minify the generated CSS file
 
